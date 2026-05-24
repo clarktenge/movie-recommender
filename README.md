@@ -13,8 +13,8 @@
 | Data cleaning & feature engineering | ✅ Done |
 | TF-IDF vectorization | ✅ Done |
 | Cosine similarity matrix | ✅ Done |
-| `recomend()` function — complete implementation | ⬜ TODO |
-| EDA visualizations (need ≥ 4 plots/tables) | ⬜ TODO |
+| `recomend()` function — complete implementation | ✅ Done |
+| EDA visualizations (need ≥ 4 plots/tables) | ✅ Done |
 | Introduction section (markdown) | ⬜ TODO |
 | Results section with sample outputs | ⬜ TODO |
 | Discussion & Conclusion section | ⬜ TODO |
