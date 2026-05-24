@@ -15,7 +15,7 @@
 | Cosine similarity matrix | ✅ Done |
 | `recomend()` function — complete implementation | ✅ Done |
 | EDA visualizations (need ≥ 4 plots/tables) | ✅ Done |
-| Introduction section (markdown) | ⬜ TODO |
+| Introduction section (markdown) | ✅ Done 
 | Results section with sample outputs | ⬜ TODO |
 | Discussion & Conclusion section | ⬜ TODO |
 | Render notebook (Kernel → Restart & Run All) | ⬜ TODO |
@@ -75,16 +75,18 @@ API_TOKEN = "YOUR_TOKEN_HERE"  # Set in notebook before running data pull
 2. Run **Kernel → Restart & Run All** to execute all cells in order.
 3. Call the recommender (once the function is complete):
 ```python
-recomend("Inception", text_weight=0.7, pop_weight=0.2, vote_weight=0.1)
+recomend("Inception")
+# or with custom weights:
+recomend("Inception", text_weight=0.95, pop_weight=0.03, vote_weight=0.02)
 ```
 
 ---
 
 ## ✅ Pre-Submission Checklist
 
-- [ ] `recomend()` function is fully implemented and tested
-- [ ] At least **4 visualizations** are present in the notebook
-- [ ] **Introduction** section written at the top of the notebook
+- [x] `recomend()` function is fully implemented and tested
+- [x] At least **4 visualizations** are present in the notebook
+- [x] **Introduction** section written at the top of the notebook
 - [ ] **Results** section shows sample recommender outputs and discusses findings
 - [ ] **Discussion/Conclusion** section reflects on limitations and takeaways
 - [ ] All cells run top-to-bottom with sequential execution counters
