@@ -16,9 +16,9 @@
 | `recomend()` function — complete implementation | ✅ Done |
 | EDA visualizations (need ≥ 4 plots/tables) | ✅ Done |
 | Introduction section (markdown) | ✅ Done 
-| Results section with sample outputs | ⬜ TODO |
-| Discussion & Conclusion section | ⬜ TODO |
-| Render notebook (Kernel → Restart & Run All) | ⬜ TODO |
+| Results section with sample outputs | ✅ Done |
+| Discussion & Conclusion section | ✅ Done |
+| Render notebook (Kernel → Restart & Run All) | ✅ Done |
 | Export as `.html` and commit to repo | ⬜ TODO |
 
 ---
@@ -87,9 +87,9 @@ recomend("Inception", text_weight=0.95, pop_weight=0.03, vote_weight=0.02)
 - [x] `recomend()` function is fully implemented and tested
 - [x] At least **4 visualizations** are present in the notebook
 - [x] **Introduction** section written at the top of the notebook
-- [ ] **Results** section shows sample recommender outputs and discusses findings
-- [ ] **Discussion/Conclusion** section reflects on limitations and takeaways
-- [ ] All cells run top-to-bottom with sequential execution counters
+- [x] **Results** section shows sample recommender outputs and discusses findings
+- [x] **Discussion/Conclusion** section reflects on limitations and takeaways
+- [x] All cells run top-to-bottom with sequential execution counters
 - [ ] Notebook exported as `PSTAT 134 FINAL PROJECT.html` and committed
 - [ ] README updated with final results summary
 
