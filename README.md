@@ -89,5 +89,6 @@ Built collaboratively by [Clark Enge](https://github.com/clarktenge), Sid Revanu
 ---
 
 ## Acknowledgements
+## Acknowledgements
 
 Data sourced from [The Movie Database (TMDB)](https://www.themoviedb.org/).
