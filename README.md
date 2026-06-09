@@ -1,112 +1,93 @@
-# Movie & TV Show Recommender System
+# Movie Recommender System
 
-> **PSTAT 134 — Statistical Data Science | Spring 2026**
-> UC Santa Barbara
-
----
-
-## 🚧 Project Status: IN PROGRESS
-
-| Task | Status |
-|------|--------|
-| Data collection via TMDB API | ✅ Done |
-| Data cleaning & feature engineering | ✅ Done |
-| TF-IDF vectorization | ✅ Done |
-| Cosine similarity matrix | ✅ Done |
-| `recomend()` function — complete implementation | ✅ Done |
-| EDA visualizations (need ≥ 4 plots/tables) | ✅ Done |
-| Introduction section (markdown) | ✅ Done 
-| Results section with sample outputs | ⬜ TODO |
-| Discussion & Conclusion section | ⬜ TODO |
-| Render notebook (Kernel → Restart & Run All) | ⬜ TODO |
-| Export as `.html` and commit to repo | ⬜ TODO |
+A content-based recommender system that suggests movies and TV shows using TF-IDF vectorization, cosine similarity, and weighted feature engineering on TMDB metadata. Given a title, it returns the most similar films ranked by a blend of text similarity, popularity, and vote average.
 
 ---
 
-## 👥 Team Members
+## How It Works
 
-- Sid Revanuru
-- Jayden Gould
-- Jason Kim
-- Clark Enge
+1. **Data collection** — ~9,925 movies pulled from the TMDB `discover/movie` endpoint, with per-title details, credits, and keywords fetched via separate API calls.
 
----
+2. **Feature engineering** — Overview, genres, cast, and keywords are combined into a single `tags` field. Multi-word tokens are collapsed (`Science Fiction` → `ScienceFiction`) so TF-IDF treats them as atomic terms. Overview words are stemmed; genres, cast, and keywords are up-weighted (3×, 2×, 2×) to carry more signal than raw overview text.
 
-## 📖 Description
+3. **Vectorization** — TF-IDF over `tags` with a 5,000-term vocabulary; English stop words removed.
 
-This project builds a **content-based movie and TV show recommender system** using metadata from the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started). Given a title as input, the system ranks similar titles by analyzing content features — genres, cast, keywords, and plot overview text — using TF-IDF vectorization and cosine similarity, with popularity and vote average as secondary weighting factors.
+4. **Similarity** — Pairwise cosine similarity matrix across all titles.
 
----
+5. **Ranking** — For a query, take the 100 most text-similar candidates and re-rank with a weighted final score:
 
-## 📁 Repository Structure
-
-```
-Movie-TV-Show-Recommender/
-├── PSTAT 134 FINAL PROJECT.ipynb   ← Main project notebook
-├── PSTAT 134 FINAL PROJECT.html    ← Rendered report (TO BE ADDED before submission)
-├── Project_Memo.ipynb              ← Initial project proposal
-├── Project_Memo.html               ← Rendered project memo
-├── testing.ipynb                   ← Development/scratch notebook
-├── all_movie_data                  ← Cached TMDB dataset (pickle)
-└── README.md                       ← This file
-```
+   ```
+   final_score = 0.95 × text_similarity + 0.03 × popularity + 0.02 × vote_average
+   ```
 
 ---
 
-## ⚙️ Setup & Installation
+## Key Findings
+
+- **The Dark Knight** — top 8 recommendations are all Batman-franchise films (scores 0.23–0.43). Named franchises share proper-noun tokens, producing tight clusters in TF-IDF space.
+- **Interstellar** — all recommendations are Sci-Fi or space-themed; strong matches include *Gravity*, *The Martian*, and *Apollo 13* (scores 0.22–0.28).
+- **Inception** — weakest results (scores 0.18–0.27). Its short, generic overview overlaps broadly with many films across genres.
+
+Raising genre/cast/keyword weights and reducing the popularity weight (0.20 → 0.03) removed high-popularity but thematically unrelated films from top results.
+
+---
+
+## Setup
 
 **Requirements:** Python 3.9+, Jupyter Lab or Jupyter Notebook
 
 ```bash
-pip install pandas numpy scikit-learn requests jupyter wordcloud matplotlib seaborn
+pip install -r requirements.txt
 ```
 
-**TMDB API Key** (only needed if regenerating data from scratch):
+**TMDB API key** — only needed to regenerate data from scratch:
+
 ```python
-API_TOKEN = "YOUR_TOKEN_HERE"  # Set in notebook before running data pull
+API_TOKEN = "YOUR_TOKEN_HERE"  # Set at top of notebook before running the data pull
 ```
-> If `all_movie_data` is present in the repo root, the notebook loads it directly and skips the API call.
+
+> If `all_movie_data.pkl` is present in the repo root, the notebook loads it directly and skips the API call.
 
 ---
 
-## 🚀 Usage
+## Usage
 
-1. Clone the repo and open `PSTAT 134 FINAL PROJECT.ipynb` in Jupyter.
-2. Run **Kernel → Restart & Run All** to execute all cells in order.
-3. Call the recommender (once the function is complete):
+```bash
+git clone https://github.com/clarktenge/movie-recommender.git
+cd movie-recommender
+jupyter notebook movie_recommender.ipynb
+```
+
+Run **Kernel → Restart & Run All**, then call the recommender:
+
 ```python
-recomend("Inception")
-# or with custom weights:
-recomend("Inception", text_weight=0.95, pop_weight=0.03, vote_weight=0.02)
+recommend("Inception")
+
+# With custom weights:
+recommend("Inception", text_weight=0.95, pop_weight=0.03, vote_weight=0.02)
 ```
 
 ---
 
-## ✅ Pre-Submission Checklist
+## Repository Structure
 
-- [x] `recomend()` function is fully implemented and tested
-- [x] At least **4 visualizations** are present in the notebook
-- [x] **Introduction** section written at the top of the notebook
-- [ ] **Results** section shows sample recommender outputs and discusses findings
-- [ ] **Discussion/Conclusion** section reflects on limitations and takeaways
-- [ ] All cells run top-to-bottom with sequential execution counters
-- [ ] Notebook exported as `PSTAT 134 FINAL PROJECT.html` and committed
-- [ ] README updated with final results summary
-
----
-
-## 📄 Rubric Reference (Written Report — 50 pts)
-
-| Criterion | Pts | Requirement |
-|-----------|-----|-------------|
-| Content | 15 | Thorough understanding of DS concepts; clear methodology, analysis, and results |
-| Organization | 15 | Clear intro, methods, results, and conclusion sections |
-| Clarity & Style | 10 | Concise writing, appropriate terminology, complete sentences |
-| Visualizations | 5 | At least 4 effective, relevant plots or tables |
-| Formatting | 5 | All code evaluated/rendered; report readable as `.html` or `.pdf` |
+```
+movie-recommender/
+├── movie_recommender.ipynb    ← Main analysis notebook (executed)
+├── all_movie_data.pkl         ← Cached TMDB dataset (pickle)
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
 
 ---
 
-## 🙏 Acknowledgements
+## Contributors
 
-Data sourced from [The Movie Database (TMDB)](https://www.themoviedb.org/). Project completed for PSTAT 134 at UC Santa Barbara.
+Built collaboratively by [Clark Enge](https://github.com/clarktenge), Sid Revanuru, Jayden Gould, and Jason Kim.
+
+---
+
+## Acknowledgements
+
+Data sourced from [The Movie Database (TMDB)](https://www.themoviedb.org/).
